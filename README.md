@@ -1,30 +1,76 @@
-# Lona Agent Skills
+# Lona Trading Platform — Claude Plugin
 
-Agent Skills for the [Lona Trading Platform](https://www.lona.agency) — AI-powered algorithmic trading strategy development, backtesting, and analysis.
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
+[![Version](https://img.shields.io/badge/version-2.0.0-green.svg)](CHANGELOG.md)
+[![Claude Code](https://img.shields.io/badge/Claude-Code-blueviolet)](https://code.claude.com)
+[![Claude Cowork](https://img.shields.io/badge/Claude-Cowork-blueviolet)](https://claude.com)
 
-These skills extend Claude's capabilities with domain expertise for trading strategy development using Lona's MCP tools.
+AI-powered algorithmic trading strategy development plugin for [Claude Code](https://code.claude.com) and [Claude Cowork](https://claude.com). Create, backtest, and analyze trading strategies using the [Lona platform](https://www.lona.agency).
 
-## Skills
+## Quick Start
+
+### Install as Claude Code Plugin
+
+```bash
+# From the Plugin Directory (when available)
+claude plugin add lona
+
+# Or install directly from GitHub
+claude plugin add https://github.com/mindsightventures/lona-agent-skills
+```
+
+### Try It
+
+```
+/lona-backtest
+```
+
+This walks you through creating a strategy, downloading data, running a backtest, and analyzing results — all in one workflow.
+
+## What's Included
+
+### Skills
+
+Domain-specific knowledge that Claude loads on-demand when relevant.
 
 | Skill | Description |
 |-------|-------------|
-| [trading-strategy](./trading-strategy/SKILL.md) | Create and manage algorithmic trading strategies — write Backtrader code or generate strategies from natural language |
-| [market-data](./market-data/SKILL.md) | Browse pre-loaded datasets and download cryptocurrency data from Binance |
-| [backtest-analysis](./backtest-analysis/SKILL.md) | Run backtests against historical data and analyze performance metrics |
+| [trading-strategy](./trading-strategy/SKILL.md) | Create and manage Backtrader strategies — from Python code or natural language descriptions |
+| [market-data](./market-data/SKILL.md) | Browse pre-loaded datasets (equities, crypto, forex) and download from Binance |
+| [backtest-analysis](./backtest-analysis/SKILL.md) | Run backtests and analyze performance — Sharpe ratio, drawdown, win rate, trade history |
 
-## Requirements
+### Slash Commands
 
-These skills are designed to work with the **Lona MCP Server**. You need an active Lona MCP connection to use them.
+Quick-access workflows invoked with `/lona:command-name`.
 
-### On Claude.ai
+| Command | Description |
+|---------|-------------|
+| [/lona-backtest](./commands/lona-backtest.md) | Full end-to-end: strategy + data + backtest + results |
+| [/lona-strategies](./commands/lona-strategies.md) | List, create, view, and update strategies |
+| [/lona-data](./commands/lona-data.md) | Browse symbols and download market data |
 
-Connect the Lona MCP server via the Connectors Directory or manually add:
-- **MCP Endpoint**: `https://mcp.lona.agency/mcp`
-- **Authentication**: OAuth 2.1
+### Agent
 
-### On Claude Code
+| Agent | Description |
+|-------|-------------|
+| [trading-assistant](./agents/trading-assistant.md) | Specialized agent for trading strategy development and analysis |
 
-Add the MCP server to your configuration:
+## MCP Tools (18 total)
+
+This plugin connects to the Lona MCP Server, which provides 18 tools:
+
+| Category | Tools |
+|----------|-------|
+| **Strategy Management** | `lona_list_strategies`, `lona_get_strategy`, `lona_get_strategy_code`, `lona_create_strategy`, `lona_update_strategy` |
+| **AI Generation** | `lona_create_strategy_from_description`, `lona_get_strategy_creation_status` |
+| **Market Data** | `lona_list_symbols`, `lona_get_symbol`, `lona_get_symbol_data`, `lona_download_market_data` |
+| **Backtesting** | `lona_run_backtest`, `lona_get_report_status` |
+| **Reports** | `lona_list_reports`, `lona_get_report`, `lona_get_full_report`, `lona_get_report_chart` |
+| **Auth** | `lona_register_agent` |
+
+## Configuration
+
+The plugin connects to Lona via MCP. The `.mcp.json` configuration:
 
 ```json
 {
@@ -42,37 +88,37 @@ Add the MCP server to your configuration:
 }
 ```
 
-## Installation
+Get your API key and User ID from [lona.agency](https://www.lona.agency).
 
-### Claude Code (via skills directory)
+For OAuth-based connections (Claude.ai Connectors), the MCP endpoint is:
+- **URL**: `https://mcp.lona.agency/mcp`
+- **Auth**: OAuth 2.1 with PKCE
 
-```bash
-git clone https://github.com/mindsightventures/lona-agent-skills.git ~/.claude/skills/lona
-```
+## Example Workflows
 
-### Claude.ai
+### 1. Generate a strategy from a description
+> "Create a momentum strategy that buys when RSI crosses below 30 and sells above 70"
 
-Upload skills as zip files through Settings > Features.
+Claude uses the trading-strategy skill to call `lona_create_strategy_from_description`, polls until the code is generated, and presents the Python source for review.
 
-### Claude API
+### 2. Download data and run a backtest
+> "/lona-backtest" → Select strategy → Download BTCUSDT daily data → Run with $100K → View results
 
-Upload via the Skills API (`/v1/skills` endpoints).
+Full E2E workflow with Sharpe ratio, max drawdown, win rate, and trade-by-trade history.
 
-## Full Workflow Example
+### 3. Compare strategy performance
+> "List my recent backtest reports and compare the top 3 by Sharpe ratio"
 
-A typical workflow combines all three skills:
+Claude uses the backtest-analysis skill to fetch reports, extract metrics, and provide side-by-side analysis.
 
-1. **Create a strategy** (trading-strategy skill): "Create a strategy that buys when RSI crosses below 30 and sells above 70"
-2. **Get market data** (market-data skill): "Download daily BTCUSDT data for 2024"
-3. **Run backtest** (backtest-analysis skill): "Backtest the strategy on the downloaded data with $100K initial capital"
-4. **Analyze results** (backtest-analysis skill): "Show me the full report with trade history and the chart"
+## Contributing
 
-## About Lona
+See [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines on reporting issues, submitting PRs, and adding skills.
 
-[Lona](https://www.lona.agency) is an AI-powered trading strategy development platform. Create, backtest, and analyze algorithmic trading strategies using Python Backtrader. Download market data from Binance, generate strategies with AI, and view detailed performance reports.
+## About
 
-**Developer**: [Mindsight Ventures](https://www.mindsightventures.com)
+[Lona](https://www.lona.agency) is an AI-powered trading strategy development platform by [Mindsight Ventures](https://mindsightventures.ai).
 
 ## License
 
-MIT
+[MIT](LICENSE)
