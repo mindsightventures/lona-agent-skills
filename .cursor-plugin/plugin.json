@@ -1,0 +1,37 @@
+{
+  "name": "lona",
+  "displayName": "LONA Trading Assistant",
+  "version": "2.1.0",
+  "description": "AI-powered trading strategy development: create, backtest, and analyze algorithmic strategies with Backtrader via 18 MCP tools.",
+  "author": {
+    "name": "Mindsight Ventures",
+    "email": "feedback@lona.agency"
+  },
+  "homepage": "https://lona.agency",
+  "repository": "https://github.com/mindsightventures/lona-agent-skills",
+  "license": "MIT",
+  "logo": "assets/lona-icon.svg",
+  "keywords": [
+    "trading",
+    "backtesting",
+    "algorithmic-trading",
+    "backtrader",
+    "market-data",
+    "strategy",
+    "crypto",
+    "finance",
+    "mcp"
+  ],
+  "category": "finance",
+  "tags": [
+    "trading",
+    "finance",
+    "backtesting",
+    "mcp",
+    "market-data"
+  ],
+  "skills": "./skills/",
+  "rules": "./rules/",
+  "agents": "./agents/",
+  "commands": "./commands/"
+}

@@ -2,6 +2,24 @@
 
 All notable changes to this project will be documented in this file.
 
+## [2.1.0] - 2026-03-12
+
+### Added
+
+- **Cursor Marketplace support**: `.cursor-plugin/plugin.json` manifest for Cursor plugin discovery
+- **Rules**: `rules/lona-trading.mdc` — Cursor-specific guidelines for Lona MCP tool usage
+- **Logo asset**: `assets/lona-icon.svg` for marketplace display
+- **Platform compatibility table** in README
+
+### Changed
+
+- **Skills directory restructured**: Moved from root-level directories to `skills/` subdirectory for cross-platform compatibility
+  - `trading-strategy/` → `skills/trading-strategy/`
+  - `market-data/` → `skills/market-data/`
+  - `backtest-analysis/` → `skills/backtest-analysis/`
+- **README**: Updated for dual-platform (Claude + Cursor) installation instructions
+- **CONTRIBUTING**: Updated skill creation guide to reflect `skills/` directory convention
+
 ## [2.0.0] - 2026-02-26
 
 ### Added
