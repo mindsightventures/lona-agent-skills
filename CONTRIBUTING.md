@@ -15,14 +15,14 @@ Thank you for your interest in contributing to Lona Agent Skills! This guide wil
 1. **Fork** the repository.
 2. **Create a branch** from `main` for your changes (`git checkout -b feature/my-improvement`).
 3. **Make your changes** following the conventions below.
-4. **Test** your changes by loading the skills in Claude Code or Claude Cowork.
+4. **Test** your changes by loading the plugin in Claude Code or Cursor.
 5. **Submit a pull request** with a clear description of what you changed and why.
 
 ### Adding a New Skill
 
 To add a new skill to this repository:
 
-1. Create a new directory at the root level with a descriptive name (e.g., `portfolio-optimization/`).
+1. Create a new directory inside `skills/` with a descriptive name (e.g., `skills/portfolio-optimization/`).
 2. Add a `SKILL.md` file inside the directory with the following structure:
    ```markdown
    ---
@@ -49,6 +49,12 @@ To add a new skill to this repository:
 3. Update the skills table in `README.md`.
 4. Add an entry to `CHANGELOG.md`.
 
+### Adding a New Rule (Cursor)
+
+1. Create a new `.mdc` file in the `rules/` directory.
+2. Include YAML frontmatter with `name`, `description`, `globs`, and `alwaysApply` fields.
+3. Update the rules table in `README.md`.
+
 ### Adding a New Command
 
 1. Create a new `.md` file in the `commands/` directory.
@@ -59,10 +65,27 @@ To add a new skill to this repository:
 ## Conventions
 
 - **Skill names** use the `lona-` prefix (e.g., `lona-trading-strategy`).
+- **Skills** live in `skills/<skill-name>/SKILL.md`.
+- **Rules** live in `rules/<rule-name>.mdc` (Cursor-specific).
+- **Commands** live in `commands/<command-name>.md`.
+- **Agents** live in `agents/<agent-name>.md`.
 - **SKILL.md files** must include YAML frontmatter with `name` and `description`.
-- **Command files** must include YAML frontmatter with `name` and `description`.
 - **Tool references** use backtick-wrapped names (e.g., `lona_list_strategies`).
 - **Markdown** should be clean, well-structured, and free of unnecessary formatting.
+
+## Platform Compatibility
+
+This plugin supports both Claude Code and Cursor:
+
+| Component | Claude Code | Cursor |
+|-----------|------------|--------|
+| Skills (`skills/`) | Auto-discovered | Via `plugin.json` path |
+| Rules (`rules/`) | N/A | Via `plugin.json` path |
+| Commands (`commands/`) | Supported | Supported |
+| Agents (`agents/`) | Supported | Supported |
+| MCP (`.mcp.json`) | Supported | Supported |
+
+When adding new components, ensure they work on both platforms by following the directory conventions above.
 
 ## Code of Conduct
 

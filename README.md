@@ -1,15 +1,41 @@
-# Lona Trading Platform — Claude Plugin
+# LONA Trading Assistant — Plugin
 
 [![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](LICENSE)
-[![Version](https://img.shields.io/badge/version-2.0.0-green.svg)](CHANGELOG.md)
+[![Version](https://img.shields.io/badge/version-2.1.0-green.svg)](CHANGELOG.md)
+[![MCP Registry](https://img.shields.io/badge/MCP-Registry-blue)](https://registry.modelcontextprotocol.io/)
 [![Claude Code](https://img.shields.io/badge/Claude-Code-blueviolet)](https://code.claude.com)
-[![Claude Cowork](https://img.shields.io/badge/Claude-Cowork-blueviolet)](https://claude.com)
+[![Cursor](https://img.shields.io/badge/Cursor-Marketplace-orange)](https://cursor.com/marketplace)
 
-AI-powered algorithmic trading strategy development plugin for [Claude Code](https://code.claude.com) and [Claude Cowork](https://claude.com). Create, backtest, and analyze trading strategies using the [Lona platform](https://www.lona.agency).
+AI-powered algorithmic trading strategy development plugin for [Claude Code](https://code.claude.com), [Claude Cowork](https://claude.com), and [Cursor](https://cursor.com). Create, backtest, and analyze trading strategies using the [Lona platform](https://www.lona.agency).
 
 ## Quick Start
 
-### Install as Claude Code Plugin
+### Install in Cursor
+
+```bash
+# From the Cursor Marketplace (when available)
+cursor://anysphere.cursor-deeplink/mcp/install?name=lona
+```
+
+Or add the MCP server manually in Cursor Settings → Features → MCP:
+
+```json
+{
+  "mcpServers": {
+    "lona": {
+      "command": "npx",
+      "args": ["@lona/mcp-server"],
+      "env": {
+        "LONA_GATEWAY_URL": "https://gateway.lona.agency",
+        "LONA_API_KEY": "your-api-key",
+        "LONA_USER_ID": "your-user-id"
+      }
+    }
+  }
+}
+```
+
+### Install in Claude Code
 
 ```bash
 # From the Plugin Directory (when available)
@@ -31,13 +57,19 @@ This walks you through creating a strategy, downloading data, running a backtest
 
 ### Skills
 
-Domain-specific knowledge that Claude loads on-demand when relevant.
+Domain-specific knowledge loaded on-demand when relevant.
 
 | Skill | Description |
 |-------|-------------|
-| [trading-strategy](./trading-strategy/SKILL.md) | Create and manage Backtrader strategies — from Python code or natural language descriptions |
-| [market-data](./market-data/SKILL.md) | Browse pre-loaded datasets (equities, crypto, forex) and download from Binance |
-| [backtest-analysis](./backtest-analysis/SKILL.md) | Run backtests and analyze performance — Sharpe ratio, drawdown, win rate, trade history |
+| [trading-strategy](./skills/trading-strategy/SKILL.md) | Create and manage Backtrader strategies — from Python code or natural language descriptions |
+| [market-data](./skills/market-data/SKILL.md) | Browse pre-loaded datasets (equities, crypto, forex) and download from Binance |
+| [backtest-analysis](./skills/backtest-analysis/SKILL.md) | Run backtests and analyze performance — Sharpe ratio, drawdown, win rate, trade history |
+
+### Rules (Cursor)
+
+| Rule | Description |
+|------|-------------|
+| [lona-trading](./rules/lona-trading.mdc) | Guidelines for using Lona MCP tools to develop and backtest trading strategies |
 
 ### Slash Commands
 
@@ -94,12 +126,22 @@ For OAuth-based connections (Claude.ai Connectors), the MCP endpoint is:
 - **URL**: `https://mcp.lona.agency/mcp`
 - **Auth**: OAuth 2.1 with PKCE
 
+## Platform Compatibility
+
+| Platform | Status | Components |
+|----------|--------|------------|
+| **Cursor** | Marketplace (pending review) | Skills, Rules, Agents, Commands, MCP |
+| **Claude Code** | Plugin Directory | Skills, Agents, Commands, MCP |
+| **Claude.ai (Cowork)** | MCP Connectors | MCP Tools + Widgets |
+| **ChatGPT** | App Store (pending review) | MCP Tools + Widgets |
+| **MCP Registry** | Published (`agency.lona/trading`) | MCP Server |
+
 ## Example Workflows
 
 ### 1. Generate a strategy from a description
 > "Create a momentum strategy that buys when RSI crosses below 30 and sells above 70"
 
-Claude uses the trading-strategy skill to call `lona_create_strategy_from_description`, polls until the code is generated, and presents the Python source for review.
+The AI generates Backtrader Python code based on the description, polls until complete, and presents the source for review.
 
 ### 2. Download data and run a backtest
 > "/lona-backtest" → Select strategy → Download BTCUSDT daily data → Run with $100K → View results
@@ -109,7 +151,7 @@ Full E2E workflow with Sharpe ratio, max drawdown, win rate, and trade-by-trade 
 ### 3. Compare strategy performance
 > "List my recent backtest reports and compare the top 3 by Sharpe ratio"
 
-Claude uses the backtest-analysis skill to fetch reports, extract metrics, and provide side-by-side analysis.
+Fetches reports, extracts metrics, and provides side-by-side analysis.
 
 ## Contributing
 
